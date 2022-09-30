@@ -1,7 +1,9 @@
 
 $(main);
 
-const expression = {
+const re = /^[1-9]\d*(\.\d+)?[\+\*\/-][1-9]\d*(\.\d+)?$/g;
+
+let expression = {
     val1: 0,
     val2: 0,
     operator: '+'
@@ -29,4 +31,11 @@ function update() {
     $('#operator').text(expression.operator);
 }
 
-// function 
+console.log(expression);
+
+expression = new Object({
+    thing1: 5,
+    thing2: 0
+})
+
+console.log(expression);
