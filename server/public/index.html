@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="./jquery-3.6.1.js"></script>
     <script src="./client.js"></script>
+    <link rel="stylesheet" href="./stylesheet.css">
     <title>Server Calculator</title>
 </head>
 <body>
@@ -14,20 +15,24 @@
         <thead>
             <tr>
                 <th><input type="number" id="value1"></th>
+                <th><span id="operator"></span></th>
                 <th><input type="number" id="value2"></th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td><button id="+">+</button></td>
+                <td></td>
                 <td><button id="-">-</button></td>
             </tr>
             <tr>
                 <td><button id="*">*</button></td>
+                <td></td>
                 <td><button id="/">/</button></td>
             </tr>
             <tr>
                 <td><button id="%">%</button></td>
+                <td></td>
                 <td><button id="=">=</button></td>
             </tr>
         </tbody>
