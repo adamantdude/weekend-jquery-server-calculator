@@ -11,31 +11,21 @@
 </head>
 <body>
     <h1>Server Calculator</h1>
-    <table>
-        <thead>
-            <tr>
-                <th><input type="number" id="value1"></th>
-                <th><span id="operator"></span></th>
-                <th><input type="number" id="value2"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><button id="+">+</button></td>
-                <td></td>
-                <td><button id="-">-</button></td>
-            </tr>
-            <tr>
-                <td><button id="*">*</button></td>
-                <td></td>
-                <td><button id="/">/</button></td>
-            </tr>
-            <tr>
-                <td><button id="%">%</button></td>
-                <td></td>
-                <td><button id="=">=</button></td>
-            </tr>
-        </tbody>
-    </table>
+    <input type="text" id="value1">
+    <span id="operator">+</span>
+    <input type="text" id="value2">
+    <button class="ops" id="=">=</button>
+    <button class="ops" id="C">C</button>
+    <button id="delHistory">Delete History</button>
+    <p id="sum">0</p>
+    <div>
+        <button class="ops" id="+">+</button>
+        <button class="ops" id="-">-</button>
+        <button class="ops" id="*">*</button>
+        <button class="ops" id="/">/</button>
+        <button class="ops" id="%">%</button>
+    </div>
+    <div id="history">
+    </div>
 </body>
 </html>
