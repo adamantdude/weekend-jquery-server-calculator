@@ -1,8 +1,10 @@
 
 $(main);
 
+// regexp saved for stretch goal
 const re = /^(\b0\.0*)*?[1-9]\d*(\.\d+)?[\+\*\/\-](\b0\.0*)*?[1-9]\d*(\.\d+)?$/g;
 
+// object to trade between client-server
 const calcObj = {
     val1: 0,
     val2: 0,
@@ -10,17 +12,16 @@ const calcObj = {
     sum: 0,
 }
 
+// client side history
 let history = [];
-
-console.log(history.length);
-
-const allowedSet = [46, 48, 57];
 
 function main() {
 
-    $(document).on('click', 'button', whichButton);
+    $(document).on('click', '.ops', whichButton);
 
-    $(document).on('click', '.historyItem', historyRemove);
+    $(document).on('click', '.historyItem', historyRecalc);
+
+    $('#delHistory').on('click', historyRemove);
 
     // $('input').on('keypress', typeSet);
 
@@ -33,11 +34,19 @@ function whichButton() {
     calcObj.val1 = $('#value1').val();
     calcObj.val2 = $('#value2').val();
 
-    if($(this).attr('id') != '=') {
+    if($(this).attr('id').match(/[^=C]/) ) {
         calcObj.operator = $(this).attr('id');
     }
 
-    ($(this).attr('id') == '=' && (calcObj.val1 && calcObj.val2)) ? sendVals() : render();
+    if($(this).attr('id').match(/C/)) {
+        $('input').val('');
+    }
+
+    if($(this).attr('id').match(/=/) && !(calcObj.val1 && calcObj.val2)) {
+        alert('Requirement - Fill in both text boxes');
+    }
+
+    ($(this).attr('id').match(/=/) && (calcObj.val1 && calcObj.val2)) ? sendVals() : render();
 
 } // END whichButton()
 
@@ -109,7 +118,7 @@ function historyLoad() {
         })
 } // END historyLoad()
 
-function historyRemove() {
+function historyRecalc() {
 
     $.ajax({
         url: '/history',
@@ -124,6 +133,21 @@ function historyRemove() {
         })
         .catch((err) => {
             console.log('in /history POST error', err);
+        })
+} // END historyRecalc()
+
+function historyRemove() {
+
+    $.ajax({
+        url: '/history',
+        method: 'DELETE'
+    })
+        .then((res) => {
+            console.log('in /history DELETE', res);
+            historyLoad();
+        })
+        .catch((err) => {
+            console.log('in /history DELETE error');
         })
 } // END historyRemove()
 
