@@ -3,11 +3,12 @@ $(main);
 
 const re = /^(\b0\.0*)*?[1-9]\d*(\.\d+)?[\+\*\/\-](\b0\.0*)*?[1-9]\d*(\.\d+)?$/g;
 
-let operator = '+';
-
-let sum = {
+const calcObj = {
+    val1: 0,
+    val2: 0,
+    operator: '+',
     sum: 0
-};
+}
 
 const allowedSet = [46, 48, 57];
 
@@ -25,32 +26,30 @@ function main() {
 
 function whichButton() {
 
-    let val1 = $('#value1').val(), val2 = $('#value2').val()
+    calcObj.val1 = $('#value1').val();
+    calcObj.val2 = $('#value2').val();
 
-    operator = $(this).attr('id');
+    calcObj.operator = $(this).attr('id');
 
-    (operator == '=' && (val1 && val2)) ? sendVals(val1, val2) : update();
+    (calcObj.operator == '=' && (calcObj.val1 && calcObj.val2)) ? sendVals() : update();
 
 }
 
 function update() {
-    $('#operator').text(operator);
 
+    if(operator != '=') {
+        $('#operator').text(calcObj.operator);
+    }
     
-    $('#sum').text(sum.sum);
+    $('#sum').text(calcObj.sum);
 }
 
-function sendVals(val1, val2) {
-
-    let values = {
-        val1: val1,
-        val2: val2
-    }
+function sendVals() {
     
     $.ajax({
         url: '/calculate',
         method: 'POST',
-        data: values
+        data: calcObj
     })
         .then((res) => {
             console.log('client.js /calculate POST', res);
@@ -70,7 +69,7 @@ $.ajax({
 })
     .then((res) => {
         console.log('client.js /calculate GET', res);
-        sum = res;
+        calcObj.sum = res;
         update();
     })
     .catch((err) => {

@@ -10,11 +10,14 @@ app.listen(5000, () => {
     console.log('Server is live!!');
 })
 
-const mathHistory = [];
+const history = [];
 
-let sum = {
-    sum: 0
-};
+const calcObj = {
+    val1: 0,
+    val2: 0,
+    operator: '+',
+    sum: 0,
+}
 
 // ------------------------------------------
 
@@ -22,7 +25,7 @@ let sum = {
 app.get('/calculate', (req, res) => {
     console.log('server.js /calculate GET');
 
-    res.send(sum);
+    res.send(calcObj);
 })
 // GET END
 
@@ -32,7 +35,7 @@ app.get('/calculate', (req, res) => {
 app.post('/calculate', (req, res) => {
     console.log('server.js /calculate POST', req.body);
 
-    mathHistory.push(req.body);
+    history.push(req.body);
 
     calc(req.body);
 
@@ -45,5 +48,5 @@ app.post('/calculate', (req, res) => {
 // FUNCTIONS
 
 function calc(obj) {
-    
+    obj.sum 
 }
