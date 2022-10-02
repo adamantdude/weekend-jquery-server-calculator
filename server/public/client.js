@@ -9,6 +9,8 @@ let expression = {
     operator: '+'
 }
 
+const allowedSet = [46, 48, 57];
+
 const opEnum = {
     '+':0,'-':1,'*':2,'/':3,'%':4,'=':5
 }
@@ -16,6 +18,8 @@ const opEnum = {
 function main() {
 
     $(document).on('click', 'button', whichButton);
+
+    $('input').on('keypress', typeSet);
 
 }
 
@@ -31,11 +35,13 @@ function update() {
     $('#operator').text(expression.operator);
 }
 
-console.log(expression);
+function typeSet(evt) {
+    console.log('Typed something', $(this));
+    console.log('What keyboard', evt.which);
 
-expression = new Object({
-    thing1: 5,
-    thing2: 0
-})
+    if( !(evt.which >= allowedSet[1] && evt.which <= allowedSet[2]) ) {
+        evt.which != allowedSet[0] ? evt.preventDefault() : console.log('Good input');
+    }
 
-console.log(expression);
+
+}
