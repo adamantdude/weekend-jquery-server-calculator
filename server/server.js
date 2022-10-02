@@ -1,4 +1,6 @@
-const express = require('express'), app = express(), bodyParser = require('body-parser');
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
 
 app.use(express.static('./server/public'));
 
@@ -10,23 +12,38 @@ app.listen(5000, () => {
 
 const mathHistory = [];
 
-const expression = {
-    val1: 0,
-    val2: 0,
-    operator: '+'
-}
+let sum = {
+    sum: 0
+};
 
 // ------------------------------------------
 
 // GET BEGIN
+app.get('/calculate', (req, res) => {
+    console.log('server.js /calculate GET');
 
+    res.send(sum);
+})
 // GET END
 
 // ------------------------------------------
 
 // POST BEGIN
+app.post('/calculate', (req, res) => {
+    console.log('server.js /calculate POST', req.body);
 
+    mathHistory.push(req.body);
+
+    calc(req.body);
+
+    res.sendStatus(201);
+})
 // POST END
 
 // ------------------------------------------
 
+// FUNCTIONS
+
+function calc(obj) {
+    
+}
