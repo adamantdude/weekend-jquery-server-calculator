@@ -5,7 +5,7 @@ $(main);
 const re = /^(\b0\.0*)*?[1-9]\d*(\.\d+)?[\+\*\/\-](\b0\.0*)*?[1-9]\d*(\.\d+)?$/g;
 
 // object to trade between client-server
-const calcObj = {
+let calcObj = {
     val1: 0,
     val2: 0,
     operator: '+',
@@ -40,6 +40,7 @@ function whichButton() {
 
     if($(this).attr('id').match(/C/)) {
         $('input').val('');
+        $('#sum').text('0');
     }
 
     if($(this).attr('id').match(/=/) && !(calcObj.val1 && calcObj.val2)) {
@@ -119,21 +120,15 @@ function historyLoad() {
 } // END historyLoad()
 
 function historyRecalc() {
+    calcObj = history[$(this).attr('id')]
+    
+    $('#value1').val(calcObj.val1);
+    $('#value2').val(calcObj.val2);
+    $('#operator').text(calcObj.operator);
 
-    $.ajax({
-        url: '/history',
-        method: 'POST',
-        data: {
-            index: $(this).attr('id')
-        }
-    })
-        .then((res) => {
-            console.log('in /history POST', res);
-            historyLoad();
-        })
-        .catch((err) => {
-            console.log('in /history POST error', err);
-        })
+    // tap into old history and send it back.
+    sendVals();
+    
 } // END historyRecalc()
 
 function historyRemove() {
